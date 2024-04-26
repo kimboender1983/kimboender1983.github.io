@@ -1,18 +1,22 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  {{ todos }}
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+
+const todos = ref([]);
+
+async function getTodos() {
+  const req = await fetch('https://jsonplaceholder.typicode.com/todos');
+
+  const res = await req.json();
+
+  todos.value = res;
+}
+
+onMounted(() => getTodos());
+</script>
 
 <style scoped>
 .logo {
