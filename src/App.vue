@@ -1,9 +1,38 @@
 <template>
-  {{ todos }}
+
+  <v-layout class="rounded rounded-md">
+    <v-app-bar title="Todos"></v-app-bar>
+
+    <v-navigation-drawer>
+      <!-- <v-list>
+        <v-list-item title="Navigation drawer"></v-list-item>
+      </v-list> -->
+    </v-navigation-drawer>
+
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+      <v-row>
+        <v-col>
+          <v-data-table
+            :headers="headers"
+            :items="todos"
+            item-value="name"
+            :items-per-page="50"
+            :item-selectable="true"
+          ></v-data-table>
+
+        </v-col>
+      </v-row>
+    </v-main>
+  </v-layout>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+
+const headers = [
+  { title: 'Title', key: 'title' },
+  { title: 'Completed', key: 'completed' }
+]
 
 const todos = ref([]);
 
@@ -17,18 +46,3 @@ async function getTodos() {
 
 onMounted(() => getTodos());
 </script>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
